@@ -7,9 +7,9 @@ export interface IUser {
     website: string;
 }
 
-export interface IPost {
-    title: string;
-    body: string;
-    id: number;
+export interface ITodo {
     userId: number;
+    id: number;
+    title: string;
+    completed: boolean;
 }

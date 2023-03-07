@@ -1,12 +1,10 @@
 import React from 'react'
-import { UserList } from './components/index'
-import { PostList } from './components/index'
+import { TodoList } from './components/index'
 
 function App() {
   return (
     <div className='App'>
-      <UserList />
-      <PostList />
+      <TodoList />
     </div>
   )
 }

@@ -1,39 +1,37 @@
-import React, { Component } from 'react'
-import apiClient from '../../common/api'
-import { IUser} from '../../common/models'
+import { useEffect, useState } from "react";
+import apiClient from "../../common/api";
+import { ITodo, IUser } from "../../common/models";
+import "../../style.css"
 
-interface IUserListState {
-    users: IUser[]
-}
+const UserList = (props: ITodo) => {
+    const [users, setUsers] = useState<IUser[]>([]);
+    const getUser = async () => {
+        try {
+            const res = await apiClient.get<IUser[]>(`/users?id=${props.userId}`);
+            setUsers(res.data);
+        } catch (error) {
+            console.log({ error });
+        }
+    };
 
-export default class UserList extends Component {
+    useEffect(() => {
+        getUser();
+    }, []);
 
-    state: IUserListState = {
-        users: []
-    }
+    return (
 
-    getUsers = async () => {
-        const res = await apiClient.get<IUser[]>('/users')
-        // this.setState({users: res.data})
-    }
-
-    componentDidMount() {
-        this.getUsers()
-    }
-
-    // componentDidUpdate(prevProps, prevState){
-        
-    // }
-
-
-
-    render() {
-
-        this.getUsers()
-        return (
+        <div >
             <div>
-                {this.state.users.map(user => <p key={user.id}>{user.id}. {user.name}</p>)}
+                {users.map((user) => (
+                    <div className={(props.completed) ? "users-info" : "users-info2"} key={user.id}>
+                        <h3>{user.email}</h3>
+                        <p><b>{user.name}</b></p>
+                        <p>{props.title}</p>
+                    </div>
+                ))}
             </div>
-        )
-    }
-}
+        </div>
+    );
+};
+
+export default UserList;
